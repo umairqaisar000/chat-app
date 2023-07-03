@@ -17,6 +17,15 @@ const io = new Server(server, {
     }
 })
 
+io.on("connection", (socket)=>{
+    console.log("User Connected: " + socket.id);
+
+    socket.on("send_broadcast_message", (data)=>{
+        socket.broadcast.emit("receive_message", data)
+    });
+})
+
+
 server.listen(process.env.PORT, ()=>{
     console.log("listening on ", process.env.PORT)
 })
